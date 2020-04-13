@@ -2,6 +2,7 @@
 #include <cs50.h>
 
 char encrypt_char(char letter, string key);
+int contains_all_letters(string key);
 
 int main(int argc, string argv[]) {
 	//printf("Number of options passed by user: %i\n", argc - 1);
@@ -31,6 +32,8 @@ int main(int argc, string argv[]) {
 		char current_character = encrypt_char(plaintext[i],key);
 		printf("%c",current_character);
 	}
+	int all_letters = contains_all_letters(key);
+	printf("Your key contains all letters: %i\n", all_letters);
 }
 
 char encrypt_char(char character, string key) {
@@ -51,4 +54,23 @@ char encrypt_char(char character, string key) {
 	else {
 		return character;
 	}	
+}
+
+int contains_all_letters(string key) {
+	int bool_array[26];
+	for (int i = 0; key[i] != '\0'; i++) {
+		if (key[i] <= 'Z' && key[i] >= 'A') {
+			bool_array[(int) key[i] - 65] = 1;
+		} 
+		else if (key[i] <= 'z' && key[i] >= 'a'){
+	 		bool_array[ (int) key[i] - 97 ] = 1;
+		}
+	}
+	for (int i = 0; i < 26; i++) {
+		printf("Array element %i: %i\n", i+1, bool_array[i]);
+		if ( bool_array[i] != 1 ){
+			return 1;
+		}
+	}
+	return 0;
 }
