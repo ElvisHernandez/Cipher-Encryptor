@@ -6,13 +6,20 @@ char encrypt_char(char letter, string key);
 int main(int argc, string argv[]) {
 	//printf("Number of options passed by user: %i\n", argc - 1);
 	if (argc != 2) {
-		printf("Usage: ./substitution key\n");
+		printf("Invalid number of arguments, only one argument for cipher key will be accepted\n");
 		return 1;
 	}
 	string key = argv[1];
 	int key_length = 0;
 	for (int i = 0; key[i] != '\0'; i++ ) {
-		key_length++;
+		if (key[i] >= 'A' && key[i] <= 'Z' || key[i] >= 'a' && key[i] <= 'z') {
+			key_length++;
+		}
+		else {
+			printf("Key must only contain alphabetical characters\n");
+			return 1;
+		}
+		
 	}
 	//printf("Number of characters passed in: %i\n", key_length);
 	if (key_length != 26) {
