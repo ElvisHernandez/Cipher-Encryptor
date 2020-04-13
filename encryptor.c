@@ -27,13 +27,17 @@ int main(int argc, string argv[]) {
 		printf("Key must contain 26 characters.\n");
 		return 1;
 	}
-	string plaintext = get_string("plaintext:");
+	if (contains_all_letters(key) == 1) {
+		printf("Every letter must be present at least once.\n");
+		return 1;
+	}
+	string plaintext = get_string("plaintext: ");
+	printf("ciphertext: ");
 	for (int i = 0; plaintext[i] != '\0'; i++) {
 		char current_character = encrypt_char(plaintext[i],key);
 		printf("%c",current_character);
 	}
-	int all_letters = contains_all_letters(key);
-	printf("Your key contains all letters: %i\n", all_letters);
+	printf("\n");
 }
 
 char encrypt_char(char character, string key) {
@@ -41,15 +45,28 @@ char encrypt_char(char character, string key) {
 	int array_index;
 	if (ascii_index <= 90 && ascii_index >= 65) {
 		array_index = ascii_index - 65;
-		//printf("Array index: %i\n", array_index);
-		//printf("Array element: %c\n", key[array_index]);
-		return key[array_index];
+		//printf("Array index: %i ", array_index);
+		//printf("Array element: %c ", key[array_index]);	
+		if (key[array_index] <= 'Z' && key[array_index] >= 'A') {
+			return key[array_index];
+		} else {
+			int case_insensitive_index = (int) key[array_index] - 32;
+			//printf("This is the case insensitive character: %i\n", case_insensitive_index);
+			return (char) case_insensitive_index;
+
+		}
 	}
 	else if (ascii_index <= 122 && ascii_index >= 97) {
 		array_index = ascii_index - 97;
-		//printf("Array index: %i\n",return encrypted_chari array_index);
-		//printf("Array element: %c\n", key[array_index]);
-		return key[array_index];
+		//printf("Array index: %i ", array_index);
+		//printf("Array element: %c ", key[array_index]);
+		if (key[array_index] <= 'z' && key[array_index] >= 'a'){
+			return key[array_index];
+		} else {
+			int case_insensitive_index = (int) key[array_index] + 32;
+			//printf("This is the case insensitive character: %i\n", case_insensitive_index);
+			return (char) case_insensitive_index;
+		}
 	} 
 	else {
 		return character;
@@ -67,7 +84,7 @@ int contains_all_letters(string key) {
 		}
 	}
 	for (int i = 0; i < 26; i++) {
-		printf("Array element %i: %i\n", i+1, bool_array[i]);
+		//printf("Array element %i: %i\n", i+1, bool_array[i]);
 		if ( bool_array[i] != 1 ){
 			return 1;
 		}
